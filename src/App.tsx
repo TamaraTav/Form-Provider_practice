@@ -4,27 +4,29 @@ import PersonalInfo from "./components/PersonalInfo";
 import Education from "./components/Education";
 import Experience from "./components/Experience";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-
-interface Inputs {
-  name: string;
-  lastName: string;
-  education: string;
-  experience: string;
-  date: string;
-}
+import { Inputs } from "./types";
 
 // LocalStorage-იდან მონაცემების წაკითხვა
 const getCachedFormData = (): Partial<Inputs> | null => {
   try {
     const cached = localStorage.getItem("formData");
-    return cached ? JSON.parse(cached) : null;
+    if (!cached) return null;
+    const parsed = JSON.parse(cached);
+    // Ensure arrays are properly formatted
+    if (parsed.education && !Array.isArray(parsed.education)) {
+      parsed.education = [];
+    }
+    if (parsed.experience && !Array.isArray(parsed.experience)) {
+      parsed.experience = [];
+    }
+    return parsed;
   } catch {
     return null;
   }
 };
 
 // LocalStorage-ში მონაცემების შენახვა
-const saveFormDataToCache = (data: Partial<Inputs>) => {
+const saveFormDataToCache = (data: Record<string, unknown>) => {
   try {
     localStorage.setItem("formData", JSON.stringify(data));
   } catch (error) {
@@ -58,9 +60,40 @@ function App() {
     defaultValues: cachedData || {
       name: "",
       lastName: "",
-      education: "",
-      experience: "",
-      date: "",
+      email: "",
+      phone: "",
+      dateOfBirth: "",
+      address: "",
+      city: "",
+      country: "",
+      postalCode: "",
+      gender: "",
+      profilePhoto: null,
+      education: [
+        {
+          degreeLevel: "",
+          institutionName: "",
+          fieldOfStudy: "",
+          startDate: "",
+          endDate: "",
+          isCurrent: false,
+          gpa: "",
+          description: "",
+        },
+      ],
+      experience: [
+        {
+          jobTitle: "",
+          companyName: "",
+          employmentType: "",
+          startDate: "",
+          endDate: "",
+          isCurrent: false,
+          location: "",
+          description: "",
+          skillsUsed: "",
+        },
+      ],
     },
     // shouldUnregister: false - form-ის მონაცემები რჩება მეხსენებაში კომპონენტის unmount-ის შემდეგაც
     shouldUnregister: false,
@@ -82,11 +115,22 @@ function App() {
     let isValid = false;
 
     if (step === 1) {
-      // Step 1 validation: name და lastName
-      isValid = await methods.trigger(["name", "lastName"]);
+      // Step 1 validation: Personal Information
+      isValid = await methods.trigger([
+        "name",
+        "lastName",
+        "email",
+        "phone",
+        "dateOfBirth",
+        "address",
+        "city",
+        "country",
+        "postalCode",
+        "gender",
+      ]);
     } else if (step === 2) {
-      // Step 2 validation: education
-      isValid = await methods.trigger(["education"]);
+      // Step 2 validation: Education
+      isValid = await methods.trigger("education");
     }
 
     if (isValid) {
