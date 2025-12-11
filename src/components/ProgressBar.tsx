@@ -18,7 +18,6 @@ export default function ProgressBar({
           const stepNumber = index + 1;
           const isCompleted = stepNumber < currentStep;
           const isActive = stepNumber === currentStep;
-          const isUpcoming = stepNumber > currentStep;
 
           return (
             <div key={index} className={styles.stepContainer}>
