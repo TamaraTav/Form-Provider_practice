@@ -1,0 +1,154 @@
+/* Progress Bar Component Styles */
+
+.container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto 2rem;
+  padding: 0 1rem;
+}
+
+.progressBar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  padding: 0 1rem;
+}
+
+.stepContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+}
+
+.stepWrapper {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  position: relative;
+}
+
+.circleWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+.stepCircle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease-in-out;
+  border: 3px solid;
+}
+
+.stepCircle.active {
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+  transform: scale(1.1);
+}
+
+.stepCircle.completed {
+  background-color: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.stepCircle.upcoming {
+  background-color: #ffffff;
+  border-color: #cbd5e1;
+  color: #94a3b8;
+}
+
+.stepNumber {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.connector {
+  flex: 1;
+  height: 3px;
+  margin: 0 0.5rem;
+  position: relative;
+  top: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+.completedLine {
+  background: linear-gradient(to right, #10b981, #3b82f6);
+}
+
+.upcomingLine {
+  background-color: #e2e8f0;
+}
+
+.stepLabel {
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #64748b;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  white-space: nowrap;
+  width: max-content;
+}
+
+.stepLabel.activeLabel {
+  color: #3b82f6;
+  font-weight: 600;
+  font-size: 0.8125rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 0.5rem;
+  }
+
+  .progressBar {
+    padding: 0 0.5rem;
+  }
+
+  .stepCircle {
+    width: 32px;
+    height: 32px;
+    font-size: 0.75rem;
+  }
+
+  .stepLabel {
+    font-size: 0.6875rem;
+  }
+
+  .connector {
+    top: -16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .stepLabel {
+    font-size: 0.625rem;
+  }
+
+  .stepCircle {
+    width: 28px;
+    height: 28px;
+  }
+
+  .connector {
+    top: -14px;
+  }
+}
+

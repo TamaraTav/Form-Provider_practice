@@ -3,6 +3,7 @@ import PersonalInfo from "./components/PersonalInfo";
 import Education from "./components/Education";
 import Experience from "./components/Experience";
 import Review from "./components/Review";
+import ProgressBar from "./components/ProgressBar";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { Inputs } from "./types";
 import styles from "./styles/App.module.css";
@@ -166,9 +167,12 @@ function App() {
     );
   }
 
+  const stepNames = ["Personal Info", "Education", "Experience", "Review"];
+
   return (
     <div className={styles.appContainer}>
       <div className={styles.formContainer}>
+        <ProgressBar currentStep={step} totalSteps={4} stepNames={stepNames} />
         <FormProvider {...methods}>
           <form
             onSubmit={(e) => {
