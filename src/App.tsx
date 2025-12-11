@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import "./App.css";
 import PersonalInfo from "./components/PersonalInfo";
 import Education from "./components/Education";
 import Experience from "./components/Experience";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { Inputs } from "./types";
+import styles from "./styles/App.module.css";
 
 // LocalStorage-იდან მონაცემების წაკითხვა
 const getCachedFormData = (): Partial<Inputs> | null => {
@@ -47,16 +47,10 @@ function App() {
   const [step, setStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // React Hook Form-ის ჩაშენებული caching მექანიზმები:
-  // 1. defaultValues - საწყისი მნიშვნელობები (ქეშირება)
-  // 2. getValues() - მიმდინარე მნიშვნელობების წაკითხვა
-  // 3. watch() - მნიშვნელობების მონიტორინგი (რეაქტიული)
-  // 4. formState - form-ის მდგომარეობა (dirty, touched, isValid, და სხვა)
-
   const cachedData = getCachedFormData();
 
   const methods = useForm<Inputs>({
-    mode: "onChange", // validation რეალურ დროში
+    mode: "onChange",
     defaultValues: cachedData || {
       name: "",
       lastName: "",
@@ -95,27 +89,23 @@ function App() {
         },
       ],
     },
-    // shouldUnregister: false - form-ის მონაცემები რჩება მეხსენებაში კომპონენტის unmount-ის შემდეგაც
     shouldUnregister: false,
   });
 
-  // LocalStorage-ში ავტომატური შენახვა - watch() მეთოდით
-  // watch() არის React Hook Form-ის ჩაშენებული მეთოდი, რომელიც აკვირდება form-ის ცვლილებებს
+  // LocalStorage-ში ავტომატური შენახვა
   useEffect(() => {
     const subscription = methods.watch((value) => {
-      // ყოველ ცვლილებაზე ინახება LocalStorage-ში
       saveFormDataToCache(value);
     });
 
     return () => subscription.unsubscribe();
   }, [methods]);
 
-  // Next ღილაკის ფუნქცია - ამოწმებს მიმდინარე step-ის ველებს
+  // Next ღილაკის ფუნქცია
   const handleNext = async () => {
     let isValid = false;
 
     if (step === 1) {
-      // Step 1 validation: Personal Information
       isValid = await methods.trigger([
         "name",
         "lastName",
@@ -129,7 +119,6 @@ function App() {
         "gender",
       ]);
     } else if (step === 2) {
-      // Step 2 validation: Education
       isValid = await methods.trigger("education");
     }
 
@@ -138,74 +127,81 @@ function App() {
     }
   };
 
-  // Submit ფუნქცია - მხოლოდ ბოლო step-ზე
+  // Submit ფუნქცია
   const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
     console.log("Form submitted with data:", data);
-
-    // Submit-ის შემდეგ ვშლით cache-ს, რადგან form დასრულებულია
     clearFormCache();
-
     setIsSubmitted(true);
-
-    // აქ შეგიძლიათ დაამატოთ:
-    // - API call მონაცემების გასაგზავნად
-    // - Redirect სხვა გვერდზე
-    // - Success message-ის ჩვენება
   };
 
-  // თუ form დასაბმიტებულია, ვაჩვენებთ success message-ს
+  // Success screen
   if (isSubmitted) {
     return (
-      <div style={{ textAlign: "center", padding: "2rem" }}>
-        <h2>✅ Form Successfully Submitted!</h2>
-        <p>Thank you for completing the form.</p>
-        <button
-          onClick={() => {
-            setIsSubmitted(false);
-            setStep(1);
-            clearFormCache(); // cache-ის გასუფთავება
-            methods.reset(); // form-ის გასუფთავება
-          }}
-        >
-          Fill Again
-        </button>
+      <div className={styles.appContainer}>
+        <div className={styles.successContainer}>
+          <h2 className={styles.successTitle}>
+            ✅ Form Successfully Submitted!
+          </h2>
+          <p className={styles.successMessage}>
+            Thank you for completing the form.
+          </p>
+          <button
+            onClick={() => {
+              setIsSubmitted(false);
+              setStep(1);
+              clearFormCache();
+              methods.reset();
+            }}
+            className={styles.successButton}
+          >
+            Fill Again
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
-    <>
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          {step === 1 && <PersonalInfo />}
-          {step === 2 && <Education />}
-          {step === 3 && <Experience />}
+    <div className={styles.appContainer}>
+      <div className={styles.formContainer}>
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)}>
+            {step === 1 && <PersonalInfo />}
+            {step === 2 && <Education />}
+            {step === 3 && <Experience />}
 
-          <div
-            style={{
-              marginTop: "2rem",
-              display: "flex",
-              gap: "1rem",
-              justifyContent: "center",
-            }}
-          >
-            {step > 1 && (
-              <button type="button" onClick={() => setStep(step - 1)}>
-                Go Back
-              </button>
-            )}
+            <div className={styles.navigationContainer}>
+              {step > 1 && (
+                <button
+                  type="button"
+                  onClick={() => setStep(step - 1)}
+                  className={`${styles.button} ${styles.buttonSecondary}`}
+                >
+                  Go Back
+                </button>
+              )}
 
-            {step < 3 ? (
-              <button type="button" onClick={handleNext}>
-                Next
-              </button>
-            ) : (
-              <button type="submit">Submit</button>
-            )}
-          </div>
-        </form>
-      </FormProvider>
-    </>
+              {step < 3 ? (
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  className={`${styles.button} ${styles.buttonPrimary}`}
+                >
+                  Next
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className={`${styles.button} ${styles.buttonPrimary}`}
+                >
+                  Submit
+                </button>
+              )}
+            </div>
+          </form>
+        </FormProvider>
+      </div>
+    </div>
   );
 }
 

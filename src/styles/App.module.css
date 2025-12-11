@@ -1,0 +1,121 @@
+/* App Component Styles */
+
+.appContainer {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  padding: 2rem 1rem;
+}
+
+.formContainer {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.navigationContainer {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  min-width: 120px;
+}
+
+.buttonPrimary {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.buttonPrimary:hover {
+  background-color: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px rgba(59, 130, 246, 0.3);
+}
+
+.buttonSecondary {
+  background-color: #64748b;
+  color: white;
+}
+
+.buttonSecondary:hover {
+  background-color: #475569;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px rgba(100, 116, 139, 0.3);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.successContainer {
+  text-align: center;
+  padding: 4rem 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.successTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #10b981;
+  margin-bottom: 1rem;
+}
+
+.successMessage {
+  font-size: 1.125rem;
+  color: #64748b;
+  margin-bottom: 2rem;
+}
+
+.successButton {
+  padding: 0.875rem 2rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+}
+
+.successButton:hover {
+  background-color: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px rgba(59, 130, 246, 0.3);
+}
+
+@media (max-width: 640px) {
+  .appContainer {
+    padding: 1rem 0.5rem;
+  }
+
+  .navigationContainer {
+    flex-direction: column;
+  }
+
+  .button {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+

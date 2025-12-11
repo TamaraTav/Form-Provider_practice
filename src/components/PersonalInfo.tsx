@@ -1,5 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { Inputs } from "../types";
+import styles from "../styles/PersonalInfo.module.css";
 
 export default function PersonalInfo() {
   const {
@@ -8,11 +9,13 @@ export default function PersonalInfo() {
   } = useFormContext<Inputs>();
 
   return (
-    <div style={{ maxWidth: "600px", margin: "0 auto", padding: "1rem" }}>
-      <h2>Step 1: Personal Information</h2>
+    <div className={styles.container}>
+      <h2 className={styles.title}>Step 1: Personal Information</h2>
 
-      <div style={{ marginBottom: "1rem" }}>
-        <label htmlFor="name">Name: *</label>
+      <div className={styles.formGroup}>
+        <label htmlFor="name" className={styles.label}>
+          Name: <span className={styles.required}>*</span>
+        </label>
         <input
           type="text"
           id="name"
@@ -23,19 +26,17 @@ export default function PersonalInfo() {
               message: "Name must be at least 2 characters",
             },
           })}
-          style={{ width: "100%", padding: "0.5rem", marginTop: "0.25rem" }}
+          className={styles.input}
         />
         {errors.name && (
-          <span
-            style={{ color: "red", display: "block", fontSize: "0.875rem" }}
-          >
-            {errors.name.message as string}
-          </span>
+          <span className={styles.error}>{errors.name.message as string}</span>
         )}
       </div>
 
-      <div style={{ marginBottom: "1rem" }}>
-        <label htmlFor="lastName">Last Name: *</label>
+      <div className={styles.formGroup}>
+        <label htmlFor="lastName" className={styles.label}>
+          Last Name: <span className={styles.required}>*</span>
+        </label>
         <input
           type="text"
           id="lastName"
@@ -46,19 +47,19 @@ export default function PersonalInfo() {
               message: "Last name must be at least 2 characters",
             },
           })}
-          style={{ width: "100%", padding: "0.5rem", marginTop: "0.25rem" }}
+          className={styles.input}
         />
         {errors.lastName && (
-          <span
-            style={{ color: "red", display: "block", fontSize: "0.875rem" }}
-          >
+          <span className={styles.error}>
             {errors.lastName.message as string}
           </span>
         )}
       </div>
 
-      <div style={{ marginBottom: "1rem" }}>
-        <label htmlFor="email">Email: *</label>
+      <div className={styles.formGroup}>
+        <label htmlFor="email" className={styles.label}>
+          Email: <span className={styles.required}>*</span>
+        </label>
         <input
           type="email"
           id="email"
@@ -69,19 +70,17 @@ export default function PersonalInfo() {
               message: "Invalid email address",
             },
           })}
-          style={{ width: "100%", padding: "0.5rem", marginTop: "0.25rem" }}
+          className={styles.input}
         />
         {errors.email && (
-          <span
-            style={{ color: "red", display: "block", fontSize: "0.875rem" }}
-          >
-            {errors.email.message as string}
-          </span>
+          <span className={styles.error}>{errors.email.message as string}</span>
         )}
       </div>
 
-      <div style={{ marginBottom: "1rem" }}>
-        <label htmlFor="phone">Phone: *</label>
+      <div className={styles.formGroup}>
+        <label htmlFor="phone" className={styles.label}>
+          Phone: <span className={styles.required}>*</span>
+        </label>
         <input
           type="tel"
           id="phone"
@@ -93,38 +92,36 @@ export default function PersonalInfo() {
               message: "Invalid phone number",
             },
           })}
-          style={{ width: "100%", padding: "0.5rem", marginTop: "0.25rem" }}
+          className={styles.input}
         />
         {errors.phone && (
-          <span
-            style={{ color: "red", display: "block", fontSize: "0.875rem" }}
-          >
-            {errors.phone.message as string}
-          </span>
+          <span className={styles.error}>{errors.phone.message as string}</span>
         )}
       </div>
 
-      <div style={{ marginBottom: "1rem" }}>
-        <label htmlFor="dateOfBirth">Date of Birth: *</label>
+      <div className={styles.formGroup}>
+        <label htmlFor="dateOfBirth" className={styles.label}>
+          Date of Birth: <span className={styles.required}>*</span>
+        </label>
         <input
           type="date"
           id="dateOfBirth"
           {...register("dateOfBirth", {
             required: "Date of birth is required",
           })}
-          style={{ width: "100%", padding: "0.5rem", marginTop: "0.25rem" }}
+          className={styles.input}
         />
         {errors.dateOfBirth && (
-          <span
-            style={{ color: "red", display: "block", fontSize: "0.875rem" }}
-          >
+          <span className={styles.error}>
             {errors.dateOfBirth.message as string}
           </span>
         )}
       </div>
 
-      <div style={{ marginBottom: "1rem" }}>
-        <label htmlFor="address">Address: *</label>
+      <div className={styles.formGroup}>
+        <label htmlFor="address" className={styles.label}>
+          Address: <span className={styles.required}>*</span>
+        </label>
         <input
           type="text"
           id="address"
@@ -135,66 +132,59 @@ export default function PersonalInfo() {
               message: "Address must be at least 5 characters",
             },
           })}
-          style={{ width: "100%", padding: "0.5rem", marginTop: "0.25rem" }}
+          className={styles.input}
         />
         {errors.address && (
-          <span
-            style={{ color: "red", display: "block", fontSize: "0.875rem" }}
-          >
+          <span className={styles.error}>
             {errors.address.message as string}
           </span>
         )}
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "1rem",
-          marginBottom: "1rem",
-        }}
-      >
-        <div>
-          <label htmlFor="city">City: *</label>
+      <div className={styles.grid}>
+        <div className={styles.gridItem}>
+          <label htmlFor="city" className={styles.label}>
+            City: <span className={styles.required}>*</span>
+          </label>
           <input
             type="text"
             id="city"
             {...register("city", {
               required: "City is required",
             })}
-            style={{ width: "100%", padding: "0.5rem", marginTop: "0.25rem" }}
+            className={styles.input}
           />
           {errors.city && (
-            <span
-              style={{ color: "red", display: "block", fontSize: "0.875rem" }}
-            >
+            <span className={styles.error}>
               {errors.city.message as string}
             </span>
           )}
         </div>
 
-        <div>
-          <label htmlFor="country">Country: *</label>
+        <div className={styles.gridItem}>
+          <label htmlFor="country" className={styles.label}>
+            Country: <span className={styles.required}>*</span>
+          </label>
           <input
             type="text"
             id="country"
             {...register("country", {
               required: "Country is required",
             })}
-            style={{ width: "100%", padding: "0.5rem", marginTop: "0.25rem" }}
+            className={styles.input}
           />
           {errors.country && (
-            <span
-              style={{ color: "red", display: "block", fontSize: "0.875rem" }}
-            >
+            <span className={styles.error}>
               {errors.country.message as string}
             </span>
           )}
         </div>
       </div>
 
-      <div style={{ marginBottom: "1rem" }}>
-        <label htmlFor="postalCode">Postal Code: *</label>
+      <div className={styles.formGroup}>
+        <label htmlFor="postalCode" className={styles.label}>
+          Postal Code: <span className={styles.required}>*</span>
+        </label>
         <input
           type="text"
           id="postalCode"
@@ -205,25 +195,25 @@ export default function PersonalInfo() {
               message: "Invalid postal code",
             },
           })}
-          style={{ width: "100%", padding: "0.5rem", marginTop: "0.25rem" }}
+          className={styles.input}
         />
         {errors.postalCode && (
-          <span
-            style={{ color: "red", display: "block", fontSize: "0.875rem" }}
-          >
+          <span className={styles.error}>
             {errors.postalCode.message as string}
           </span>
         )}
       </div>
 
-      <div style={{ marginBottom: "1rem" }}>
-        <label htmlFor="gender">Gender: *</label>
+      <div className={styles.formGroup}>
+        <label htmlFor="gender" className={styles.label}>
+          Gender: <span className={styles.required}>*</span>
+        </label>
         <select
           id="gender"
           {...register("gender", {
             required: "Gender is required",
           })}
-          style={{ width: "100%", padding: "0.5rem", marginTop: "0.25rem" }}
+          className={styles.select}
         >
           <option value="">Select Gender</option>
           <option value="male">Male</option>
@@ -232,27 +222,25 @@ export default function PersonalInfo() {
           <option value="prefer-not-to-say">Prefer not to say</option>
         </select>
         {errors.gender && (
-          <span
-            style={{ color: "red", display: "block", fontSize: "0.875rem" }}
-          >
+          <span className={styles.error}>
             {errors.gender.message as string}
           </span>
         )}
       </div>
 
-      <div style={{ marginBottom: "1rem" }}>
-        <label htmlFor="profilePhoto">Profile Photo:</label>
+      <div className={styles.formGroup}>
+        <label htmlFor="profilePhoto" className={styles.label}>
+          Profile Photo:
+        </label>
         <input
           type="file"
           id="profilePhoto"
           accept="image/*"
           {...register("profilePhoto")}
-          style={{ width: "100%", padding: "0.5rem", marginTop: "0.25rem" }}
+          className={styles.fileInput}
         />
         {errors.profilePhoto && (
-          <span
-            style={{ color: "red", display: "block", fontSize: "0.875rem" }}
-          >
+          <span className={styles.error}>
             {errors.profilePhoto.message as string}
           </span>
         )}
